@@ -73,3 +73,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | p28 | [Kelly Sikkema](https://unsplash.com/photos/beige-eco-bag-1Pgq9ZpIatI), [He's Her Lobster](https://unsplash.com/photos/black-tote-bag-9b6UhV4nLZs) |
 | p29 | [Tijana Drndarski](https://unsplash.com/photos/white-and-black-textile-on-white-and-brown-wooden-seat-sBmXdO892GY), [Susan Wilkinson](https://unsplash.com/photos/red-and-black-striped-textile-9dDJk8lvUwg) |
 | p30 | [Aurélia Dubois](https://unsplash.com/photos/brown-leather-sling-bag-on-white-background-xzrJCS4grC4), [dhehaivan](https://unsplash.com/photos/man-in-white-crew-neck-shirt-UDYE-agPbj4) |
+
+## SEO 설정 (Google Search Console)
+
+배포 후 아래 환경 변수를 설정합니다. (Vercel: Project → Settings → Environment Variables)
+
+| 변수 | 설명 |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | 실제 도메인 (예: `https://example.com`). canonical·사이트맵·구조화 데이터의 기준 주소 |
+| `GOOGLE_SITE_VERIFICATION` | 서치콘솔 "HTML 태그" 소유권 확인의 `content` 값 |
+
+등록 순서: 서치콘솔에서 속성 추가 → HTML 태그로 소유권 확인 → `사이트맵`에 `/sitemap.xml` 제출.
+`/robots.txt`, `/sitemap.xml`, `/llms.txt`는 자동 생성되며, 장바구니·찜·결제 페이지는 색인에서 제외됩니다.
