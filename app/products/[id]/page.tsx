@@ -2,17 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { PHOTOS } from "@/lib/photos";
-import { PRODUCTS, categoryLabel, formatPrice, getProduct } from "@/lib/products";
+import { getProduct, getProducts } from "@/lib/data";
+import { categoryLabel, formatPrice } from "@/lib/products";
 import { SITE_NAME, abs } from "@/lib/site";
 import ProductDetail from "./ProductDetail";
 
-export function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ id: p.id }));
+export async function generateStaticParams() {
+  return (await getProducts()).map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/products/[id]">): Promise<Metadata> {
   const { id } = await params;
-  const p = getProduct(id);
+  const p = await getProduct(id);
   if (!p) return { title: "상품을 찾을 수 없습니다", robots: { index: false } };
 
   const title = `${p.name} - ${categoryLabel(p.category)}`;
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/products/[id]">):
 
 export default async function ProductPage({ params }: PageProps<"/products/[id]">) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
   if (!product) notFound();
 
   const url = abs(`/products/${product.id}`);

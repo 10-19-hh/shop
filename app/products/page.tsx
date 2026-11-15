@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import JsonLd from "@/components/JsonLd";
-import { PRODUCTS } from "@/lib/products";
+import { getProducts } from "@/lib/data";
+import type { Product } from "@/lib/products";
 import { SITE_NAME, abs } from "@/lib/site";
 import ProductList from "./ProductList";
 
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: { title: "전체상품", description: DESCRIPTION, url: "/products" },
 };
 
-const listJsonLd = {
+const buildJsonLd = (PRODUCTS: Product[]) => ({
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: `${SITE_NAME} 전체상품`,
@@ -30,14 +31,15 @@ const listJsonLd = {
       name: p.name,
     })),
   },
-};
+});
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts();
   return (
     <>
-      <JsonLd data={listJsonLd} />
+      <JsonLd data={buildJsonLd(products)} />
       <Suspense fallback={<p className="py-10 text-center text-sm">불러오는 중...</p>}>
-        <ProductList />
+        <ProductList products={products} />
       </Suspense>
     </>
   );

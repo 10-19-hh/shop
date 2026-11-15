@@ -1,9 +1,11 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { BRAND } from "@/lib/config";
-import { CATEGORIES, PRODUCTS } from "@/lib/products";
+import { getProducts } from "@/lib/data";
+import { CATEGORIES } from "@/lib/products";
 
-export default function Home() {
+export default async function Home() {
+  const PRODUCTS = await getProducts();
   const newest = [...PRODUCTS]
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     .slice(0, 8);

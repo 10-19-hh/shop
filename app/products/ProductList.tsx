@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
-import { CATEGORIES, COLOR_HEX, PRICE_RANGES, PRODUCTS } from "@/lib/products";
+import { CATEGORIES, COLOR_HEX, PRICE_RANGES, type Product } from "@/lib/products";
 
 const SORTS = [
   { id: "new", label: "신상품순" },
@@ -43,7 +43,7 @@ function Chips({
   );
 }
 
-export default function ProductList() {
+export default function ProductList({ products }: { products: Product[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -63,7 +63,7 @@ export default function ProductList() {
   };
 
   const range = PRICE_RANGES.find((r) => r.id === price);
-  const items = PRODUCTS.filter(
+  const items = products.filter(
     (p) =>
       (!category || p.category === category) &&
       (!range || (p.price >= range.min && p.price < range.max)) &&
