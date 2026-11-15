@@ -132,7 +132,7 @@ function build(): Product[] {
         price,
         colors,
         sizes: seed.sizes,
-        images: LABELS.slice(0, 2 + (n % 3)),
+        images: LABELS.slice(0, 2),
         description,
         material,
         care: seed.care,
